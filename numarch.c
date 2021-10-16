@@ -1,14 +1,15 @@
 #include <unistd.h>
+
 int main(){
     int fd[2];
     int pid;
     pipe(fd);
     pid = fork();
     if (pid==0){
-        close(STDOUT_FILENO);
+        close(STDIN_FILENO);
         dup(fd[0]);
         close(fd[1]);
-        execlp("wc", "wc", NULL);
+        execlp("wc", "wc", "-l", NULL);
 
     }else {
         close(STDOUT_FILENO);
@@ -20,5 +21,3 @@ int main(){
     
     
     return 0;
-
-}
